@@ -5,25 +5,52 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-    <header>
-        <h1>Welcome to My Coffee Shop</h1>
+    <header class="bg-white">
+        <nav class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
+            <div class="flex lg:flex-1">
+                <a href="#" class="-m-1.5 p-1.5">
+                    <span class="sr-only">Your Company</span>
+                    <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="">
+                </a>
+            </div>
+
+            <div class="flex lg:hidden">
+                <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
+                    <span class="sr-only">Open main menu</span>
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="hidden lg:flex lg:gap-x-12">
+                <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Features</a>
+                <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Marketplace</a>
+                <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Company</a>
+            </div>
+
+            <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+                {% if user.is_authenticated %}
+                    <span class="whitespace-nowrap rounded-full bg-purple-100 px-2.5 py-0.5 text-sm text-purple-700">
+                        {{ user.username }}
+                    </span>
+                    <form method="POST" action="{% url "logout" %}">
+                        {% csrf_token %}
+                        <input type="submit" value="Logout" />
+                    </form>
+                {% else %}
+                    <a class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50" href="{% url "login" %}">Login</a>
+                {% endif %}	
+            </div>
+        </nav>
     </header>
-    
-    <nav>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/menu">Menu</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="/contact">Contact</a></li>
-        </ul>
-    </nav>
     
     <main class="container mx-auto px-4">
         {% block content %}
         {% endblock %}
     </main>
     
-    <footer>
+    <footer class="container mx-auto px-4 py-4">
         <p>&copy; 2022 My Coffee Shop. All rights reserved.</p>
     </footer>
     
